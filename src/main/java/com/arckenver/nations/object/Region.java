@@ -89,6 +89,10 @@ public class Region
 		return s;
 	}
 
+	public boolean isEmpty() {
+		return extrema.isEmpty();
+	}
+
 	public boolean isInside(Location<World> loc)
 	{
 		Rect extr = extrema.get(loc.getExtent().getUniqueId());

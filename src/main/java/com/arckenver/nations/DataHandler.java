@@ -163,7 +163,7 @@ public class DataHandler
 		}
 		for (Nation nation : worldChunks.get(loc.getExtent().getUniqueId()).get(area))
 		{
-			if (nation.getRegion().isInside(loc))
+			if (!nation.getRegion().isEmpty() && nation.getRegion().isInside(loc))
 			{
 				return nation;
 			}
@@ -358,7 +358,7 @@ public class DataHandler
 			{
 				if (ignoreMinDistance)
 				{
-					if (nation.getRegion().isInside(loc))
+					if (nation.getRegion().isEmpty() && nation.getRegion().isInside(loc))
 					{
 						return false;
 					}

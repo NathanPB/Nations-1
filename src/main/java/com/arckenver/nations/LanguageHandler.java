@@ -194,6 +194,7 @@ public class LanguageHandler
 	public static String INFO_RENAME = "Nation {OLDNAME} changed its name to {NEWNAME}";
 	public static String INFO_TAG = "Nation {NAME} changed its tag from {OLDTAG} to {NEWTAG}";
 	public static String ERROR_BADSPAWNLOCATION = "Nation spawn must be set inside your territory";
+	public static String ERROR_NOAREACLAIMED = "Your nation doesn't have an claimed area";
 	public static String ERROR_ALPHASPAWN = "Spawn name must be alphanumeric and must contain between {MIN} and {MAX} characters";
 	public static String SUCCESS_CHANGESPAWN = "Successfully changed the nation spawn";
 	public static String INFO_TELEPORTLIST = "You can teleport to {SPAWNLIST} ";
