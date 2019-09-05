@@ -11,6 +11,7 @@ import org.spongepowered.api.command.spec.CommandExecutor;
 import org.spongepowered.api.command.spec.CommandSpec;
 import org.spongepowered.api.entity.living.player.Player;
 import org.spongepowered.api.service.economy.account.Account;
+import org.spongepowered.api.service.economy.account.UniqueAccount;
 import org.spongepowered.api.service.economy.transaction.ResultType;
 import org.spongepowered.api.service.economy.transaction.TransactionResult;
 import org.spongepowered.api.text.Text;
@@ -65,7 +66,7 @@ public class NationClaimOutpostExecutor implements CommandExecutor
 				src.sendMessage(Text.of(TextColors.RED, LanguageHandler.ERROR_NOECO));
 				return CommandResult.success();
 			}
-			Optional<Account> optAccount = NationsPlugin.getEcoService().getOrCreateAccount("nation-" + nation.getUUID());
+			Optional<UniqueAccount> optAccount = NationsPlugin.getEcoService().getOrCreateAccount(nation.getUUID());
 			if (!optAccount.isPresent())
 			{
 				src.sendMessage(Text.of(TextColors.RED, LanguageHandler.ERROR_ECONONATION));

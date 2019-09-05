@@ -105,7 +105,7 @@ public class Utils
 			BigDecimal balance = null;
 			if (NationsPlugin.getEcoService() != null)
 			{
-				Optional<Account> optAccount = NationsPlugin.getEcoService().getOrCreateAccount("nation-" + nation.getUUID().toString());
+				Optional<Account> optAccount = NationsPlugin.getEcoService().getOrCreateAccount(nation.getUUID().toString());
 				if (optAccount.isPresent())
 				{
 					balance = optAccount.get().getBalance(NationsPlugin.getEcoService().getDefaultCurrency());

@@ -52,7 +52,7 @@ public class TaxesCollectRunnable implements Runnable
 		{
 			if (nation.isAdmin())
 				continue;
-			Optional<Account> optAccount = NationsPlugin.getEcoService().getOrCreateAccount("nation-" + nation.getUUID().toString());
+			Optional<Account> optAccount = NationsPlugin.getEcoService().getOrCreateAccount(nation.getUUID().toString());
 			if (!optAccount.isPresent())
 			{
 				NationsPlugin.getLogger().error("Nation " + nation.getName() + " doesn't have an account on the economy plugin of this server");

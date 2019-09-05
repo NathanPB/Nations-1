@@ -98,7 +98,7 @@ public class NationClaimExecutor implements CommandExecutor
 				src.sendMessage(Text.of(TextColors.RED, LanguageHandler.ERROR_NOECO));
 				return CommandResult.success();
 			}
-			Optional<Account> optAccount = NationsPlugin.getEcoService().getOrCreateAccount("nation-" + nation.getUUID().toString());
+			Optional<Account> optAccount = NationsPlugin.getEcoService().getOrCreateAccount(nation.getUUID().toString());
 			if (!optAccount.isPresent())
 			{
 				src.sendMessage(Text.of(TextColors.RED, LanguageHandler.ERROR_ECONONATION));
