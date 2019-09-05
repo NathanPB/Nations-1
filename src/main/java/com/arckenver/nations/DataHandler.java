@@ -495,8 +495,8 @@ public class DataHandler
 						loc = loc.sub(0,0,16);
 					}
 				})
-				.delay(1, TimeUnit.SECONDS)
-				.interval(1, TimeUnit.SECONDS)
+				.delay(500, TimeUnit.MILLISECONDS)
+				.interval(500, TimeUnit.MILLISECONDS)
 				.async()
 				.submit(NationsPlugin.getInstance());
 		markJobs.put(player.getUniqueId(), t.getUniqueId());
