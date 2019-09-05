@@ -3,10 +3,14 @@ plugins {
 }
 
 group = 'com.carrot'
-version = '2.11-S7.0-MC1.12.1'
+version = '2.11-S7.0-MC1.12.2'
 description = 'A towny-like worldguard-like zone managment plugin'
 
 dependencies {
-    compile 'org.spongepowered:spongeapi:7.0.0-20171101.163142-49'
+    compile 'org.spongepowered:spongeapi:7.2.0-20190425.042712-16'
     compile 'com.google.code.gson:gson:2.8.1'
+}
+
+tasks.withType(Jar) {
+    destinationDir = file("$rootDir/Server/mods/")
 }
