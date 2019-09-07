@@ -108,7 +108,10 @@ public class BuildPermListener
 			if (!ConfigHandler.isWhitelisted("break", trans.getFinal().getState().getType().getId())
 					&& ConfigHandler.getNode("worlds").getNode(trans.getFinal().getLocation().get().getExtent().getName()).getNode("enabled").getBoolean())
 			{
-				if (user == null || !DataHandler.getPerm("build", user.getUniqueId(), loc))
+				if (user == null)
+					return;
+
+				if (!DataHandler.getPerm("build", user.getUniqueId(), loc))
 				{
 					trans.setValid(false);
 					if (user != null && user instanceof Player) {
