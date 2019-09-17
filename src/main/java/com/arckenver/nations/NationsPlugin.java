@@ -7,6 +7,12 @@ import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.concurrent.TimeUnit;
 
+import eu.crushedpixel.sponge.packetgate.api.event.PacketEvent;
+import eu.crushedpixel.sponge.packetgate.api.listener.PacketListener;
+import eu.crushedpixel.sponge.packetgate.api.listener.PacketListenerAdapter;
+import eu.crushedpixel.sponge.packetgate.api.registry.PacketConnection;
+import eu.crushedpixel.sponge.packetgate.api.registry.PacketGate;
+import net.minecraft.network.play.client.CPacketCustomPayload;
 import org.slf4j.Logger;
 import org.spongepowered.api.Sponge;
 import org.spongepowered.api.config.ConfigDir;
@@ -65,8 +71,7 @@ public class NationsPlugin
 	}
 
 	@Listener
-	public void onStart(GameStartedServerEvent event)
-	{
+	public void onStart(GameStartedServerEvent event) {
 		LanguageHandler.load();
 		ConfigHandler.load();
 		DataHandler.load();
@@ -88,6 +93,16 @@ public class NationsPlugin
 		Sponge.getEventManager().registerListeners(this, new BuildPermListener());
 		Sponge.getEventManager().registerListeners(this, new InteractPermListener());
 		Sponge.getEventManager().registerListeners(this, new ChatListener());
+
+		Sponge.getServiceManager().provide(PacketGate.class).get().registerListener(
+				new PacketListenerAdapter() {
+					@Override
+					public void onPacketRead(PacketEvent packetEvent, PacketConnection connection) {
+						if (packetEvent.getPacket() instanceof CPacketCustomPayload &&InteractPermListener.players.contains(connection.getPlayerUUID()))
+							packetEvent.setCancelled(true);
+					}
+				}, PacketListener.ListenerPriority.FIRST);
+
 
 		LocalDateTime localNow = LocalDateTime.now();
 		ZonedDateTime zonedNow = ZonedDateTime.of(localNow, ZoneId.systemDefault());
