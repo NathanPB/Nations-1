@@ -8,6 +8,7 @@ import java.util.UUID;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
+import com.arckenver.nations.object.NationSpawn;
 import org.apache.commons.lang3.StringUtils;
 import org.spongepowered.api.entity.living.Living;
 import org.spongepowered.api.entity.living.player.Player;
@@ -500,7 +501,7 @@ public class Utils
 		if (clicker == CLICKER_DEFAULT)
 		{
 			return structureX(
-					nation.getSpawns().keySet().iterator(),
+					nation.getSpawns().stream().map(NationSpawn::getName).iterator(),
 					Text.builder(),
 					(b) -> b.append(Text.of(TextColors.GRAY, LanguageHandler.FORMAT_NONE)),
 					(b, spawnName) -> b.append(Text.builder(spawnName).color(color).onClick(TextActions.runCommand("/n " + cmd + " " + spawnName)).build()),
@@ -509,14 +510,14 @@ public class Utils
 		if (clicker == CLICKER_ADMIN || nation.getFlag("public"))
 		{
 			return structureX(
-					nation.getSpawns().keySet().iterator(),
+					nation.getSpawns().stream().map(NationSpawn::getName).iterator(),
 					Text.builder(),
 					(b) -> b.append(Text.of(TextColors.GRAY, LanguageHandler.FORMAT_NONE)),
 					(b, spawnName) -> b.append(Text.builder(spawnName).color(color).onClick(TextActions.runCommand("/n visit " + nation.getRealName() + " " + spawnName)).build()),
 					(b) -> b.append(Text.of(color, ", "))).build();
 		}
 		return structureX(
-				nation.getSpawns().keySet().iterator(),
+				nation.getSpawns().stream().map(NationSpawn::getName).iterator(),
 				Text.builder(),
 				(b) -> b.append(Text.of(TextColors.GRAY, LanguageHandler.FORMAT_NONE)),
 				(b, spawnName) -> b.append(Text.builder(spawnName).color(color).build()),
