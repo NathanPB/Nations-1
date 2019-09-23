@@ -1,10 +1,8 @@
 package com.arckenver.nations.serializer;
 
 import java.lang.reflect.Type;
-import java.util.Hashtable;
+import java.util.*;
 import java.util.Map.Entry;
-import java.util.Optional;
-import java.util.UUID;
 
 import com.arckenver.nations.object.*;
 import org.spongepowered.api.Sponge;
@@ -106,7 +104,6 @@ public class NationDeserializer implements JsonDeserializer<Nation>
 				Optional<World> optWorld = Sponge.getServer().getWorld(UUID.fromString(spawnObj.get("world").getAsString()));
 				if (optWorld.isPresent())
 				{
-					Hashtable<String, Boolean> spawnFlags = new Hashtable<>();
 					Location<World> spawnLocation = optWorld.get().getLocation(
 						spawnObj.get("x").getAsDouble(),
 						spawnObj.get("y").getAsDouble(),
@@ -114,11 +111,14 @@ public class NationDeserializer implements JsonDeserializer<Nation>
 					);
 
 					if(spawnObj.has("flags")) {
-						spawnObj.get("flags").getAsJsonObject().entrySet().forEach(entry -> {
-							spawnFlags.put(entry.getKey(), entry.getValue().getAsBoolean());
+						HashSet<String> spawnFlags = new HashSet<>();
+						spawnObj.get("flags").getAsJsonArray().forEach(entry -> {
+							spawnFlags.add(entry.getAsString());
 						});
+						nation.addSpawn(new NationSpawn(e.getKey(), spawnLocation, spawnFlags));
+					} else {
+						nation.addSpawn(new NationSpawn(e.getKey(), spawnLocation));
 					}
-					nation.addSpawn(new NationSpawn(e.getKey(), spawnLocation, spawnFlags));
 				}
 			}
 		}
