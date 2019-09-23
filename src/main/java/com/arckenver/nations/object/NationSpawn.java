@@ -3,21 +3,21 @@ package com.arckenver.nations.object;
 import org.spongepowered.api.world.Location;
 import org.spongepowered.api.world.World;
 
-import java.util.Hashtable;
+import java.util.HashSet;
 
 public class NationSpawn {
     private String name;
     private Location<World> location;
-    private Hashtable<String, Boolean> flags;
+    private HashSet<String> flags;
 
-    public NationSpawn(String name, Location<World> location, Hashtable<String, Boolean> flags) {
+    public NationSpawn(String name, Location<World> location, HashSet<String> flags) {
         this.name = name;
         this.location = location;
         this.flags = flags;
     }
 
     public NationSpawn(String name, Location<World> location) {
-        this(name, location, new Hashtable<>());
+        this(name, location, NationSpawn.getDefaultFlags());
     }
 
 
@@ -37,15 +37,33 @@ public class NationSpawn {
         this.location = location;
     }
 
-    public Hashtable<String, Boolean> getFlags() {
+    public HashSet<String> getFlags() {
         return flags;
     }
 
-    public boolean getFlag(String flag) {
-        return this.flags.get(flag);
+    public boolean hasFlag(String flag) {
+        return flags.contains(flag);
+    }
+
+    public void addTag(String tag) {
+        flags.add(tag);
+    }
+
+    public void removeTag(String tag) {
+        flags.remove(tag);
     }
 
     public void setFlag(String flag, boolean b) {
-        this.flags.put(flag, b);
+        if(b) {
+            addTag(flag);
+        } else {
+            removeTag(flag);
+        }
+    }
+
+    private static HashSet<String> getDefaultFlags() {
+        HashSet<String> flags = new HashSet<>();
+        flags.add("public");
+        return flags;
     }
 }

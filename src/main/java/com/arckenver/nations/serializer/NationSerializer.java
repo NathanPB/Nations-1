@@ -134,13 +134,13 @@ public class NationSerializer implements JsonSerializer<Nation>
 		for (NationSpawn e : nation.getSpawns())
 		{
 			JsonObject loc = new JsonObject();
-			JsonObject spawnFlags = new JsonObject();
+			JsonArray spawnFlags = new JsonArray();
 			loc.add("world", new JsonPrimitive(e.getLocation().getExtent().getUniqueId().toString()));
 			loc.add("x", new JsonPrimitive(e.getLocation().getX()));
 			loc.add("y", new JsonPrimitive(e.getLocation().getY()));
 			loc.add("z", new JsonPrimitive(e.getLocation().getZ()));
 
-			e.getFlags().forEach((key, value) -> flags.add(key, new JsonPrimitive(value)));
+			e.getFlags().stream().map(JsonPrimitive::new).forEach(spawnFlags::add);
 			loc.add("flags", spawnFlags);
 
 			spawns.add(e.getName(), loc);
