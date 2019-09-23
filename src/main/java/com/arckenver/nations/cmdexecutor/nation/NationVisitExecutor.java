@@ -96,7 +96,18 @@ public class NationVisitExecutor implements CommandExecutor
 						.append(Text.of(TextColors.DARK_GRAY, " <- " + LanguageHandler.CLICK)).build());
 				return CommandResult.success();
 			}
-			
+
+			if(
+				player.hasPermission("nations.bypass.teleport.privatespawn") ||
+					(
+						!spawn.getFlags().contains("public") &&
+							!(nation.isStaff(player.getUniqueId()) || nation.isCitizen(player.getUniqueId()))
+					)
+			) {
+				src.sendMessage(Text.of(TextColors.RED, LanguageHandler.ERROR_SPAWNNOTPUBLIC.replace("{SPAWNNAME}", spawnName)));
+				return CommandResult.success();
+			}
+
 			if (player.hasPermission("nations.bypass.teleport.warmup")) {
 				PlayerTeleportEvent event = new PlayerTeleportEvent(player, spawn.getLocation(), NationsPlugin.getCause());
 				Sponge.getEventManager().post(event);
