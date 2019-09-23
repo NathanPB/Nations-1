@@ -2,7 +2,9 @@ package com.arckenver.nations.cmdexecutor.nation;
 
 import java.math.BigDecimal;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
+import com.arckenver.nations.object.*;
 import org.spongepowered.api.command.CommandException;
 import org.spongepowered.api.command.CommandResult;
 import org.spongepowered.api.command.CommandSource;
@@ -23,11 +25,6 @@ import com.arckenver.nations.DataHandler;
 import com.arckenver.nations.LanguageHandler;
 import com.arckenver.nations.NationsPlugin;
 import com.arckenver.nations.Utils;
-import com.arckenver.nations.object.Nation;
-import com.arckenver.nations.object.Point;
-import com.arckenver.nations.object.Rect;
-import com.arckenver.nations.object.Region;
-import com.arckenver.nations.object.Zone;
 import com.flowpowered.math.vector.Vector2i;
 
 public class NationUnclaimExecutor implements CommandExecutor
@@ -75,7 +72,7 @@ public class NationUnclaimExecutor implements CommandExecutor
 				src.sendMessage(Text.of(TextColors.RED, LanguageHandler.ERROR_NEEDINTERSECT));
 				return CommandResult.success();
 			}
-			for (Location<World> spawn : nation.getSpawns().values())
+			for (Location<World> spawn : nation.getSpawns().stream().map(NationSpawn::getLocation).collect(Collectors.toList()))
 			{
 				if (rect.isInside(new Vector2i(spawn.getBlockX(), spawn.getBlockZ())))
 				{
