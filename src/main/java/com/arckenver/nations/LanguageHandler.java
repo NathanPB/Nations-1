@@ -40,6 +40,7 @@ public class LanguageHandler
 	public static String HELP_DESC_CMD_N_VISIT = "teleport to spawn of a public nation";
 	public static String HELP_DESC_CMD_N_COST = "display nation prices";
 	public static String HELP_DESC_CMD_N_HOME = "if you have a spawn named 'home', tp to it";
+	public static String HELP_DESC_CMD_N_SPAWNFLAG = "sets a flag to a spawn";
 	
 	public static String HELP_DESC_CMD_NA_RELOAD = "reloads config file";
 	public static String HELP_DESC_CMD_NA_CREATE = "create admin nation";
