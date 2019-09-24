@@ -243,6 +243,23 @@ public class Utils
 		return builder.build();
 	}
 
+	public static Text formatNationSpawnDescription(NationSpawn spawn) {
+		return Text.of(
+			TextColors.GOLD, "----------{ ",
+			TextColors.YELLOW, spawn.getName(),
+			TextColors.GOLD, " }----------\n",
+			TextColors.GOLD, LanguageHandler.FORMAT_FLAGS + ":",
+			TextColors.GOLD, "\n    Public: ",
+			Text.builder(LanguageHandler.FLAG_ENABLED).color(
+				spawn.getFlags().contains("public") ? TextColors.YELLOW : TextColors.DARK_GRAY
+			).onClick(TextActions.runCommand("/n spawnflag " + spawn.getName() + " public true")),
+			"/",
+			Text.builder(LanguageHandler.FLAG_DISABLED).color(
+				spawn.getFlags().contains("public") ? TextColors.DARK_GRAY : TextColors.YELLOW
+			).onClick(TextActions.runCommand("/n spawnflag " + spawn.getName() + " public false"))
+		);
+	}
+
 	public static Text formatCitizenDescription(String name)
 	{
 		UUID uuid = DataHandler.getPlayerUUID(name);
