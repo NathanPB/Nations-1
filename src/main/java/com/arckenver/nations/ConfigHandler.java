@@ -244,8 +244,6 @@ public class ConfigHandler
 	}
 
 	public static boolean isWhitelisted(String type, String id) {
-		if (id.equals("minecraft:air"))
-			return true;
 		if (!config.getNode("whitelist", type).hasListChildren())
 			return false;
 		for (CommentedConfigurationNode item : config.getNode("whitelist", type).getChildrenList()) {

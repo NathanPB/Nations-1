@@ -67,21 +67,14 @@ public class NationHomeExecutor implements CommandExecutor
 			
 			src.sendMessage(Text.of(TextColors.AQUA, LanguageHandler.INFO_TELEPORTCOOLDOWN));
 			
-			Scheduler scheduler = Sponge.getScheduler();
-			Task.Builder taskBuilder = scheduler.createTaskBuilder();
-			taskBuilder.execute(new Consumer<Task>() {
-				
-				@Override
-				public void accept(Task t) {
-					t.cancel();
-					PlayerTeleportEvent event = new PlayerTeleportEvent(player, spawn.getLocation(), NationsPlugin.getCause());
+			Task.builder().execute(task -> {
+					PlayerTeleportEvent event = new PlayerTeleportEvent(player, spawn, NationsPlugin.getCause());
 					Sponge.getEventManager().post(event);
 					if (!event.isCancelled())
 					{
 						player.setLocation(spawn.getLocation());
 						src.sendMessage(Text.of(TextColors.AQUA, LanguageHandler.INFO_TELEPORTED));
 					}
-				}
 			}).delay(10, TimeUnit.SECONDS).submit(NationsPlugin.getInstance());
 		}
 		else

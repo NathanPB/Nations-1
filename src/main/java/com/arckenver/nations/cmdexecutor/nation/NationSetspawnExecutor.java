@@ -53,6 +53,12 @@ public class NationSetspawnExecutor implements CommandExecutor
 				return CommandResult.success();
 			}
 			Location<World> newSpawn = player.getLocation();
+
+			if (nation.getRegion().isEmpty())
+			{
+				src.sendMessage(Text.of(TextColors.RED, LanguageHandler.ERROR_NOAREACLAIMED));
+				return CommandResult.success();
+			}
 			if (!nation.getRegion().isInside(newSpawn))
 			{
 				src.sendMessage(Text.of(TextColors.RED, LanguageHandler.ERROR_BADSPAWNLOCATION));

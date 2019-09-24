@@ -81,7 +81,7 @@ public class ZoneBuyExecutor implements CommandExecutor
 			Account receiver;
 			if (oldOwner == null)
 			{
-				Optional<Account> optReceiver = NationsPlugin.getEcoService().getOrCreateAccount("nation-" + nation.getUUID());
+				Optional<UniqueAccount> optReceiver = NationsPlugin.getEcoService().getOrCreateAccount(nation.getUUID());
 				if (!optReceiver.isPresent())
 				{
 					src.sendMessage(Text.of(TextColors.RED, LanguageHandler.ERROR_ECONONATION));

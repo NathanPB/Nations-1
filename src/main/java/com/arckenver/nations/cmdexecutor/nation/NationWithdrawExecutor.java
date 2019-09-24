@@ -70,7 +70,7 @@ public class NationWithdrawExecutor implements CommandExecutor
 				src.sendMessage(Text.of(TextColors.RED, LanguageHandler.ERROR_ECONOACCOUNT));
 				return CommandResult.success();
 			}
-			Optional<Account> optNationAccount = NationsPlugin.getEcoService().getOrCreateAccount("nation-" + nation.getUUID().toString());
+			Optional<Account> optNationAccount = NationsPlugin.getEcoService().getOrCreateAccount(nation.getUUID().toString());
 			if (!optNationAccount.isPresent())
 			{
 				src.sendMessage(Text.of(TextColors.RED, LanguageHandler.ERROR_ECONONATION));

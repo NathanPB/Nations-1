@@ -6,3 +6,5 @@ bin
 .project
 .idea
 /.nb-gradle/
+Server
+classes

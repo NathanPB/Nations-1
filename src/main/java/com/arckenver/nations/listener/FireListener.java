@@ -14,8 +14,8 @@ import com.arckenver.nations.DataHandler;
 
 public class FireListener
 {
-	@Listener(order=Order.EARLY, beforeModifications = true)
-	public void onFire(ChangeBlockEvent event)
+	@Listener(order = Order.EARLY, beforeModifications = true)
+	public void onFire(ChangeBlockEvent.Modify event)
 	{
 		event
 		.getTransactions()

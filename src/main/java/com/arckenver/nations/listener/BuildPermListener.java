@@ -33,6 +33,10 @@ public class BuildPermListener
 		.getTransactions()
 		.stream()
 		.forEach(trans -> trans.getOriginal().getLocation().ifPresent(loc -> {
+			if (trans.getFinal().getState().getType().getId().startsWith("harvestcraft:pam")) {
+				return;
+			}
+
 			if (ConfigHandler.getNode("worlds").getNode(trans.getFinal().getLocation().get().getExtent().getName()).getNode("enabled").getBoolean()
 					&& !ConfigHandler.isWhitelisted("build", trans.getFinal().getState().getType().getId())
 					&& !DataHandler.getPerm("build", player.getUniqueId(), loc))
@@ -108,7 +112,10 @@ public class BuildPermListener
 			if (!ConfigHandler.isWhitelisted("break", trans.getFinal().getState().getType().getId())
 					&& ConfigHandler.getNode("worlds").getNode(trans.getFinal().getLocation().get().getExtent().getName()).getNode("enabled").getBoolean())
 			{
-				if (user == null || !DataHandler.getPerm("build", user.getUniqueId(), loc))
+				if (user == null)
+					return;
+
+				if (!DataHandler.getPerm("build", user.getUniqueId(), loc))
 				{
 					trans.setValid(false);
 					if (user != null && user instanceof Player) {

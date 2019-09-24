@@ -23,6 +23,7 @@ import org.spongepowered.api.text.Text;
 import org.spongepowered.api.text.channel.MessageChannel;
 import org.spongepowered.api.util.blockray.BlockRay;
 import org.spongepowered.api.util.blockray.BlockRayHit;
+import org.spongepowered.api.world.Chunk;
 import org.spongepowered.api.world.Location;
 import org.spongepowered.api.world.World;
 
@@ -163,7 +164,7 @@ public class DataHandler
 		}
 		for (Nation nation : worldChunks.get(loc.getExtent().getUniqueId()).get(area))
 		{
-			if (nation.getRegion().isInside(loc))
+			if (!nation.getRegion().isEmpty() && nation.getRegion().isInside(loc))
 			{
 				return nation;
 			}
@@ -358,7 +359,7 @@ public class DataHandler
 			{
 				if (ignoreMinDistance)
 				{
-					if (nation.getRegion().isInside(loc))
+					if (nation.getRegion().isEmpty() && nation.getRegion().isInside(loc))
 					{
 						return false;
 					}
@@ -457,6 +458,7 @@ public class DataHandler
 		}
 		ParticleEffect nationParticule = ParticleEffect.builder().type(ParticleTypes.DRAGON_BREATH).quantity(1).build();
 		ParticleEffect zoneParticule = ParticleEffect.builder().type(ParticleTypes.HAPPY_VILLAGER).quantity(1).build();
+
 		Task t = Sponge.getScheduler()
 				.createTaskBuilder()
 				.execute(task -> {
@@ -467,6 +469,17 @@ public class DataHandler
 						return;
 					}
 					Location<World> loc = player.getLocation().add(0, 2, 0);
+					Vector3i chunkPos = loc.getChunkPosition();
+
+					for (int x = chunkPos.getX() - 3; x <= chunkPos.getX() + 3; x++) {
+						for (int z = chunkPos.getZ() - 3; z <= chunkPos.getZ() + 3; z++) {
+							Optional<Chunk> chunk = loc.getExtent().getChunk(x, 0, z);
+
+							if (!chunk.isPresent() || !chunk.get().isLoaded())
+								return;
+						}
+					}
+
 					loc = loc.sub(8, 0, 8);
 					for (int x = 0; x < 16; ++x)
 					{
@@ -495,8 +508,8 @@ public class DataHandler
 						loc = loc.sub(0,0,16);
 					}
 				})
-				.delay(1, TimeUnit.SECONDS)
-				.interval(1, TimeUnit.SECONDS)
+				.delay(500, TimeUnit.MILLISECONDS)
+				.interval(500, TimeUnit.MILLISECONDS)
 				.async()
 				.submit(NationsPlugin.getInstance());
 		markJobs.put(player.getUniqueId(), t.getUniqueId());

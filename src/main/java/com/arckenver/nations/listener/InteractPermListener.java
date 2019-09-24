@@ -1,7 +1,12 @@
 package com.arckenver.nations.listener;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 
+import com.arckenver.nations.NationsPlugin;
 import org.spongepowered.api.block.BlockTypes;
 import org.spongepowered.api.data.type.HandTypes;
 import org.spongepowered.api.entity.Entity;
@@ -16,6 +21,7 @@ import org.spongepowered.api.event.entity.InteractEntityEvent;
 import org.spongepowered.api.event.filter.cause.First;
 import org.spongepowered.api.item.ItemTypes;
 import org.spongepowered.api.item.inventory.ItemStack;
+import org.spongepowered.api.scheduler.Task;
 import org.spongepowered.api.text.Text;
 import org.spongepowered.api.text.format.TextColors;
 
@@ -25,6 +31,8 @@ import com.arckenver.nations.LanguageHandler;
 
 public class InteractPermListener
 {
+	public static List<UUID> players = new ArrayList<>();
+
 	@Listener(order=Order.FIRST, beforeModifications = true)
 	public void onInteract(InteractBlockEvent event, @First Player player)
 	{
@@ -42,6 +50,11 @@ public class InteractPermListener
 		event.getTargetBlock().getLocation().ifPresent(loc -> {
 			if (!DataHandler.getPerm("interact", player.getUniqueId(), loc))
 			{
+				if (event.getTargetBlock().getState().getType().getId().startsWith("opencomputers:")) {
+					players.add(player.getUniqueId());
+					player.closeInventory();
+					Task.builder().execute(task -> players.remove(player.getUniqueId())).delay(500, TimeUnit.MILLISECONDS).async().submit(NationsPlugin.getInstance());
+				}
 				event.setCancelled(true);
 				if (loc.getBlockType() != BlockTypes.STANDING_SIGN && loc.getBlockType() != BlockTypes.WALL_SIGN)
 					player.sendMessage(Text.of(TextColors.RED, LanguageHandler.ERROR_PERM_INTERACT));
