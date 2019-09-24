@@ -98,10 +98,10 @@ public class NationVisitExecutor implements CommandExecutor
 			}
 
 			if(
-				player.hasPermission("nations.bypass.teleport.privatespawn") ||
+				!player.hasPermission("nations.bypass.teleport.privatespawn") &&
 					(
 						!spawn.getFlags().contains("public") &&
-							!(nation.isStaff(player.getUniqueId()) || nation.isCitizen(player.getUniqueId()))
+						!(nation.isStaff(player.getUniqueId()) || nation.isCitizen(player.getUniqueId()))
 					)
 			) {
 				src.sendMessage(Text.of(TextColors.RED, LanguageHandler.ERROR_SPAWNNOTPUBLIC.replace("{SPAWNNAME}", spawnName)));
