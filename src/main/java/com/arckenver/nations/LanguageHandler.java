@@ -199,7 +199,8 @@ public class LanguageHandler
 	public static String INFO_TELEPORTLIST = "You can teleport to {SPAWNLIST} ";
 	public static String ERROR_SPAWNNAME = "Invalid spawn name, choose between {SPAWNLIST} ";
 	public static String ERROR_SPAWNNOTPUBLIC = "The spawn {SPAWNNAME} is not public!";
-	public static String INFO_TELEPORTED = "Teleported you to the nation spawn";
+    public static String ERROR_SPAWN_UNKNOWNTAG = "The flag {FLAGNAME} is unknown!";
+    public static String INFO_TELEPORTED = "Teleported you to the nation spawn";
 	public static String ERROR_NEEDSTANDZONE = "You must be standing on a zone to perform that command";
 	public static String ERROR_ZONENFS = "This zone is not up for sale";
 	public static String ERROR_ZONENOMONEY = "You need {AMOUNT} to pay for this zone";
