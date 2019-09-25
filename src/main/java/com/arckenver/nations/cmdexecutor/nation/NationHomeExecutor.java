@@ -68,7 +68,7 @@ public class NationHomeExecutor implements CommandExecutor
 			src.sendMessage(Text.of(TextColors.AQUA, LanguageHandler.INFO_TELEPORTCOOLDOWN));
 			
 			Task.builder().execute(task -> {
-					PlayerTeleportEvent event = new PlayerTeleportEvent(player, spawn, NationsPlugin.getCause());
+					PlayerTeleportEvent event = new PlayerTeleportEvent(player, spawn.getLocation(), NationsPlugin.getCause());
 					Sponge.getEventManager().post(event);
 					if (!event.isCancelled())
 					{
