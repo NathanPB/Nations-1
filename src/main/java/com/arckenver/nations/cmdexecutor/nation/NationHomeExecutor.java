@@ -3,6 +3,7 @@ package com.arckenver.nations.cmdexecutor.nation;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Consumer;
 
+import com.arckenver.nations.object.NationSpawn;
 import org.spongepowered.api.Sponge;
 import org.spongepowered.api.command.CommandException;
 import org.spongepowered.api.command.CommandResult;
@@ -47,18 +48,18 @@ public class NationHomeExecutor implements CommandExecutor
 				return CommandResult.success();
 			}
 
-			Location<World> spawn = nation.getSpawn("home");
+			NationSpawn spawn = nation.getSpawn("home");
 			if (spawn == null)
 			{
 				src.sendMessage(Text.of(TextColors.AQUA, LanguageHandler.ERROR_NOHOME));
 				return CommandResult.success();
 			}
 			if (player.hasPermission("nations.bypass.teleport.warmup")) {
-				PlayerTeleportEvent event = new PlayerTeleportEvent(player, spawn, NationsPlugin.getCause());
+				PlayerTeleportEvent event = new PlayerTeleportEvent(player, spawn.getLocation(), NationsPlugin.getCause());
 				Sponge.getEventManager().post(event);
 				if (!event.isCancelled())
 				{
-					player.setLocation(spawn);
+					player.setLocation(spawn.getLocation());
 					src.sendMessage(Text.of(TextColors.AQUA, LanguageHandler.INFO_TELEPORTED));
 				}
 				return CommandResult.success();
@@ -71,7 +72,7 @@ public class NationHomeExecutor implements CommandExecutor
 					Sponge.getEventManager().post(event);
 					if (!event.isCancelled())
 					{
-						player.setLocation(spawn);
+						player.setLocation(spawn.getLocation());
 						src.sendMessage(Text.of(TextColors.AQUA, LanguageHandler.INFO_TELEPORTED));
 					}
 			}).delay(10, TimeUnit.SECONDS).submit(NationsPlugin.getInstance());

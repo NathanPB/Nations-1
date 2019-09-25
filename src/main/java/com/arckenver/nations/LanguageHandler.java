@@ -40,6 +40,7 @@ public class LanguageHandler
 	public static String HELP_DESC_CMD_N_VISIT = "teleport to spawn of a public nation";
 	public static String HELP_DESC_CMD_N_COST = "display nation prices";
 	public static String HELP_DESC_CMD_N_HOME = "if you have a spawn named 'home', tp to it";
+	public static String HELP_DESC_CMD_N_SPAWNFLAG = "sets a flag to a spawn";
 	
 	public static String HELP_DESC_CMD_NA_RELOAD = "reloads config file";
 	public static String HELP_DESC_CMD_NA_CREATE = "create admin nation";
@@ -199,7 +200,9 @@ public class LanguageHandler
 	public static String SUCCESS_CHANGESPAWN = "Successfully changed the nation spawn";
 	public static String INFO_TELEPORTLIST = "You can teleport to {SPAWNLIST} ";
 	public static String ERROR_SPAWNNAME = "Invalid spawn name, choose between {SPAWNLIST} ";
-	public static String INFO_TELEPORTED = "Teleported you to the nation spawn";
+	public static String ERROR_SPAWNNOTPUBLIC = "The spawn {SPAWNNAME} is not public!";
+    public static String ERROR_SPAWN_UNKNOWNTAG = "The flag {FLAGNAME} is unknown!";
+    public static String INFO_TELEPORTED = "Teleported you to the nation spawn";
 	public static String ERROR_NEEDSTANDZONE = "You must be standing on a zone to perform that command";
 	public static String ERROR_ZONENFS = "This zone is not up for sale";
 	public static String ERROR_ZONENOMONEY = "You need {AMOUNT} to pay for this zone";

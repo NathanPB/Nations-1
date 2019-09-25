@@ -5,6 +5,7 @@ import java.util.Hashtable;
 import java.util.Map.Entry;
 import java.util.UUID;
 
+import com.arckenver.nations.object.NationSpawn;
 import org.spongepowered.api.world.Location;
 import org.spongepowered.api.world.World;
 
@@ -130,15 +131,19 @@ public class NationSerializer implements JsonSerializer<Nation>
 		json.add("zones", zonesArray);
 
 		JsonObject spawns = new JsonObject();
-		for (Entry<String, Location<World>> e : nation.getSpawns().entrySet())
+		for (NationSpawn e : nation.getSpawns())
 		{
 			JsonObject loc = new JsonObject();
-			loc.add("world", new JsonPrimitive(e.getValue().getExtent().getUniqueId().toString()));
-			loc.add("x", new JsonPrimitive(e.getValue().getX()));
-			loc.add("y", new JsonPrimitive(e.getValue().getY()));
-			loc.add("z", new JsonPrimitive(e.getValue().getZ()));
+			JsonArray spawnFlags = new JsonArray();
+			loc.add("world", new JsonPrimitive(e.getLocation().getExtent().getUniqueId().toString()));
+			loc.add("x", new JsonPrimitive(e.getLocation().getX()));
+			loc.add("y", new JsonPrimitive(e.getLocation().getY()));
+			loc.add("z", new JsonPrimitive(e.getLocation().getZ()));
 
-			spawns.add(e.getKey(), loc);
+			e.getFlags().stream().map(JsonPrimitive::new).forEach(spawnFlags::add);
+			loc.add("flags", spawnFlags);
+
+			spawns.add(e.getName(), loc);
 		}
 		json.add("spawns", spawns);
 		

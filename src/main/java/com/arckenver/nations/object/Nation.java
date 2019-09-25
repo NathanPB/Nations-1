@@ -31,7 +31,7 @@ public class Nation
 	private String name;
 	private String tag;
 	private boolean isAdmin;
-	private Hashtable<String, Location<World>> spawns;
+	private ArrayList<NationSpawn> spawns;
 	private Region region;
 	private UUID president;
 	private ArrayList<UUID> ministers;
@@ -57,7 +57,7 @@ public class Nation
 		this.name = name;
 		this.tag = null;
 		this.isAdmin = isAdmin;
-		this.spawns = new Hashtable<String, Location<World>>();
+		this.spawns = new ArrayList<>();
 		this.region = new Region();
 		this.president = null;
 		this.ministers = new ArrayList<UUID>();
@@ -148,22 +148,25 @@ public class Nation
 		return ConfigHandler.getNode("prices", "upkeepPerCitizen").getDouble() * citizens.size();
 	}
 
-	public Location<World> getSpawn(String name)
+	public NationSpawn getSpawn(String name)
 	{
-		return spawns.get(name);
+		return spawns.stream().filter(it -> it.getName().equals(name)).findFirst().orElse(null);
 	}
 
-	public void addSpawn(String name, Location<World> spawn)
+	public void addSpawn(NationSpawn spawn)
 	{
-		this.spawns.put(name, spawn);
+		this.spawns.add(spawn);
 	}
 	
 	public void removeSpawn(String name)
 	{
-		this.spawns.remove(name);
+		NationSpawn sp = this.getSpawn(name);
+		if(sp != null) {
+			this.spawns.remove(sp);
+		}
 	}
 
-	public Hashtable<String, Location<World>> getSpawns()
+	public ArrayList<NationSpawn> getSpawns()
 	{
 		return spawns;
 	}

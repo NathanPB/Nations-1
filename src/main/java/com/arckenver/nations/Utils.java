@@ -8,6 +8,7 @@ import java.util.UUID;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
+import com.arckenver.nations.object.NationSpawn;
 import org.apache.commons.lang3.StringUtils;
 import org.spongepowered.api.entity.living.Living;
 import org.spongepowered.api.entity.living.player.Player;
@@ -240,6 +241,23 @@ public class Utils
 		}
 
 		return builder.build();
+	}
+
+	public static Text formatNationSpawnDescription(NationSpawn spawn) {
+		return Text.of(
+			TextColors.GOLD, "----------{ ",
+			TextColors.YELLOW, spawn.getName(),
+			TextColors.GOLD, " }----------\n",
+			TextColors.GOLD, LanguageHandler.FORMAT_FLAGS + ":",
+			TextColors.GOLD, "\n    Public: ",
+			Text.builder(LanguageHandler.FLAG_ENABLED).color(
+				spawn.getFlags().contains("public") ? TextColors.YELLOW : TextColors.DARK_GRAY
+			).onClick(TextActions.runCommand("/n spawnflag " + spawn.getName() + " public true")),
+			"/",
+			Text.builder(LanguageHandler.FLAG_DISABLED).color(
+				spawn.getFlags().contains("public") ? TextColors.DARK_GRAY : TextColors.YELLOW
+			).onClick(TextActions.runCommand("/n spawnflag " + spawn.getName() + " public false"))
+		);
 	}
 
 	public static Text formatCitizenDescription(String name)
@@ -500,7 +518,7 @@ public class Utils
 		if (clicker == CLICKER_DEFAULT)
 		{
 			return structureX(
-					nation.getSpawns().keySet().iterator(),
+					nation.getSpawns().stream().map(NationSpawn::getName).iterator(),
 					Text.builder(),
 					(b) -> b.append(Text.of(TextColors.GRAY, LanguageHandler.FORMAT_NONE)),
 					(b, spawnName) -> b.append(Text.builder(spawnName).color(color).onClick(TextActions.runCommand("/n " + cmd + " " + spawnName)).build()),
@@ -509,14 +527,14 @@ public class Utils
 		if (clicker == CLICKER_ADMIN || nation.getFlag("public"))
 		{
 			return structureX(
-					nation.getSpawns().keySet().iterator(),
+					nation.getSpawns().stream().map(NationSpawn::getName).iterator(),
 					Text.builder(),
 					(b) -> b.append(Text.of(TextColors.GRAY, LanguageHandler.FORMAT_NONE)),
 					(b, spawnName) -> b.append(Text.builder(spawnName).color(color).onClick(TextActions.runCommand("/n visit " + nation.getRealName() + " " + spawnName)).build()),
 					(b) -> b.append(Text.of(color, ", "))).build();
 		}
 		return structureX(
-				nation.getSpawns().keySet().iterator(),
+				nation.getSpawns().stream().map(NationSpawn::getName).iterator(),
 				Text.builder(),
 				(b) -> b.append(Text.of(TextColors.GRAY, LanguageHandler.FORMAT_NONE)),
 				(b, spawnName) -> b.append(Text.builder(spawnName).color(color).build()),
