@@ -42,7 +42,7 @@ public class NationDelspawnExecutor implements CommandExecutor
 			{
 				src.sendMessage(Text.builder()
 						.append(Text.of(TextColors.AQUA, LanguageHandler.INFO_CLICK_DELSPAWN.split("\\{SPAWNLIST\\}")[0]))
-						.append(Utils.formatNationSpawns(nation, TextColors.YELLOW, "delhome"))
+						.append(Utils.formatNationSpawns(nation, TextColors.YELLOW, "delspawn"))
 						.append(Text.of(TextColors.AQUA, LanguageHandler.INFO_CLICK_DELSPAWN.split("\\{SPAWNLIST\\}")[1])).build());
 				return CommandResult.success();
 			}
