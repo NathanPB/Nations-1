@@ -240,6 +240,11 @@ public class Utils
 			}
 		}
 
+		builder.append(Text.of(
+			TextColors.GOLD,
+			"\nSpawns:\n    ",
+			Utils.formatNationSpawns(nation, TextColors.GOLD)
+		));
 		return builder.build();
 	}
 
