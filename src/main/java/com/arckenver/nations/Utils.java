@@ -518,10 +518,16 @@ public class Utils
 		if (clicker == CLICKER_DEFAULT)
 		{
 			return structureX(
-					nation.getSpawns().stream().map(NationSpawn::getName).iterator(),
+					nation.getSpawns().stream().iterator(),
 					Text.builder(),
 					(b) -> b.append(Text.of(TextColors.GRAY, LanguageHandler.FORMAT_NONE)),
-					(b, spawnName) -> b.append(Text.builder(spawnName).color(color).onClick(TextActions.runCommand("/n " + cmd + " " + spawnName)).build()),
+					(b, spawn) -> b.append(
+						Text.builder(spawn.getName())
+							.color(spawn.getFlags().contains("public") ? TextColors.GREEN : TextColors.RED)
+							.onHover(TextActions.showText(Text.of(spawn.getFlags().contains("public") ? "Public Spawn" : "Private Spawn")))
+							.onClick(TextActions.runCommand("/n " + cmd + " " + spawn.getName()))
+							.build()
+					),
 					(b) -> b.append(Text.of(color, ", "))).build();
 		}
 		if (clicker == CLICKER_ADMIN || nation.getFlag("public"))
